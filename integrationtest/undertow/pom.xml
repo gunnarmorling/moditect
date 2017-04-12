@@ -388,6 +388,57 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.14.2</version>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>user</alias>
+                                    <name>gunnarmorling/undertow</name>
+                                    <build>
+                                        <from>centos:7</from>
+                                        <assembly>
+                                            <descriptor>assembly.xml</descriptor>
+                                            <basedir>/opt/my-undertow/</basedir>
+<!--                                             <user>jboss:jboss:jboss</user> -->
+                                        </assembly>
+                                        <ports>
+                                            <port>8080</port>
+                                        </ports>
+                                    </build>
+                                    
+                                    <run>
+                                        <ports>
+                                            <port>8080:8080</port>
+                                        </ports>
+                                        <log>
+                                            <prefix>WF</prefix>
+                                            <date>none</date>
+                                            <color>cyan</color>
+                                        </log>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>docker:build</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+<!--                             <execution> -->
+<!--                                 <id>docker:start</id> -->
+<!--                                 <phase>install</phase> -->
+<!--                                 <goals> -->
+<!--                                     <goal>start</goal> -->
+<!--                                 </goals> -->
+<!--                             </execution> -->
+                        </executions>
+                    </plugin>
         </plugins>
     </build>
 </project>
