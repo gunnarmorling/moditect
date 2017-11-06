@@ -76,4 +76,16 @@ ModiTect demo
             </uses>
         </moduleInfo>
     </module>
-    
+
+- build project -> jar --describe-module -f engine/target/hibernate-validator-6.0.5-SNAPSHOT.jar
+
+- create runtime image
+  - show modularization of dependencies
+  - jlink goal options
+  - mvn clean install -pl :moditect-integrationtest-undertow
+  - ./integrationtest/undertow/target/jlink-image/bin/java --list-modules
+  - ./integrationtest/undertow/target/jlink-image/bin/helloWorld
+  - http "localhost:8080?name=Devoxx"
+  - du -h integrationtest/undertow/target/jlink-image 
+  - switch to UT 1.4.21.Final-no-sql and make sql static
+  - du -h integrationtest/undertow/target/jlink-image 
