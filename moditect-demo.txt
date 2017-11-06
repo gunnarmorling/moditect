@@ -1,0 +1,79 @@
+ModiTect demo
+=============
+
+- show plug-in
+- inline usage -> works on java 8
+
+    <module>
+        <moduleInfoSource>
+            exports org.hibernate.validator
+            exports org.hibernate.validator.cfg
+            exports org.hibernate.validator.cfg.context
+            exports org.hibernate.validator.cfg.defs
+            exports org.hibernate.validator.cfg.defs.br
+            exports org.hibernate.validator.cfg.defs.pl
+            exports org.hibernate.validator.constraints
+            exports org.hibernate.validator.constraints.br
+            exports org.hibernate.validator.constraints.pl
+            exports org.hibernate.validator.constraints.time
+            exports org.hibernate.validator.constraintvalidation
+            exports org.hibernate.validator.constraintvalidators
+            exports org.hibernate.validator.engine
+            exports org.hibernate.validator.group
+            exports org.hibernate.validator.messageinterpolation
+            exports org.hibernate.validator.parameternameprovider
+            exports org.hibernate.validator.path
+            exports org.hibernate.validator.resourceloading
+            exports org.hibernate.validator.spi.cfg
+            exports org.hibernate.validator.spi.group
+            exports org.hibernate.validator.spi.resourceloading
+            exports org.hibernate.validator.spi.scripting
+            
+            requires classmate
+            requires hibernate.jpa static
+            requires java.base mandated
+            requires java.desktop
+            requires java.scripting
+            requires java.validation transitive
+            requires java.xml
+            requires java.xml.bind
+            requires javafx.base
+            requires javax.el
+            requires jboss.logging
+            requires jboss.logging.annotations static
+            requires joda.time static
+            requires jsoup static
+            requires money.api static
+            requires paranamer static
+            
+            uses javax.validation.ConstraintValidator
+            uses javax.validation.valueextraction.ValueExtractor
+            
+            provides javax.validation.spi.ValidationProvider with org.hibernate.validator.hibernatevalidator
+            
+            qualified exports org.hibernate.validator.internal.util.logging to org.jboss.logging
+        </moduleInfoSource>
+    </module>
+    
+- shorter <moduleInfo> mode:
+
+    <module>
+        <moduleInfo>
+            <name>org.hibernate.validator</name>
+            <requires>
+                static jboss.logging.annotations;
+                transitive java.validation;
+                *;
+            </requires>
+            <exports>
+                org.hibernate.validator.internal.util.logging to org.jboss.logging;
+                !org.hibernate.validator.internal*;
+                *;
+            </exports>
+            <uses>
+                javax.validation.ConstraintValidator;
+                javax.validation.valueextraction.ValueExtractor;
+            </uses>
+        </moduleInfo>
+    </module>
+    
