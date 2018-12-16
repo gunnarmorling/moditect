@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 import java.util.spi.ToolProvider;
@@ -379,6 +380,11 @@ public class GenerateModuleInfo {
         }
 
         command.addAll( jdepsExtraArgs );
+
+        if (jarSetContainsMultiReleaseJar()) {
+            command.add("--multi-release=9");
+        }
+
         command.add( inputJar.toString() );
 
         log.debug( "Running jdeps " + String.join(  " ", command ) );
@@ -441,5 +447,28 @@ public class GenerateModuleInfo {
         }
 
         return dir;
+    }
+
+    private boolean jarSetContainsMultiReleaseJar() {
+        if (isMultiReleaseJar(inputJar)) {
+            return true;
+        }
+
+        for (DependencyDescriptor dependencyDescriptor : dependencies) {
+            if (isMultiReleaseJar(dependencyDescriptor.getPath())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isMultiReleaseJar(Path path) {
+        try(JarFile jarFile = new JarFile(path.toFile())) {
+            return jarFile.isMultiRelease();
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Couldn't determine whether " + path + " is a multi-release JAR", e);
+        }
     }
 }

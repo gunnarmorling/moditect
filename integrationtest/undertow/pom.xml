@@ -165,6 +165,7 @@
                                     <exports>!*;</exports>
                                 </moduleInfo>
                             </module>
+                            <jvmVersion>9</jvmVersion>
                         </configuration>
                         <goals>
                             <goal>add-module-info</goal>
